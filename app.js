@@ -10,7 +10,6 @@ $(document).ready(function () {
                     $("#city").append(`<h4>${data.news[i].tit}</h4>`);
                 }
             }
-            console.log(data)
             mynews()
         }
     })
