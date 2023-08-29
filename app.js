@@ -4,26 +4,62 @@ $(document).ready(function () {
         if (e.which == 13) {
             let url = `https://news-api-project-8401e868529d.herokuapp.com/api/news?api_key=4b1a0e44-0205-4ad8-9158-3c10c3e87ae9`
             async function mynews() {
-                let responce = await fetch(url);
-                let data = await responce.json();
-                for (let i = 0; i < data.news.length; i++) {
-                    $("#city").append(`<h4>${data.news[i].tit}</h4>`);
+                let response = await fetch(url);
+                let data = await response.json();
+
+                if (Array.isArray(data.news)) {
+                    data.news.forEach(item => {
+                        const box = document.createElement('div');
+                        box.className = 'col-md-4';
+                        box.innerHTML = `
+                            <div class"box">
+                                <div class="imgbox">
+                                    <img src="${item.img}" alt="">
+                                </div>
+                                <h1>${item.tit}</h1>
+                                <h4>${item.des}</h4>
+                                <div class="infobox">
+                                    <div class="lbtn">Good</div>
+                                    <div class="dbtn">Bad</div>
+                                </div>
+                            </div>
+                        `;
+                        $(".row").append(box);
+                    });
                 }
             }
             mynews()
         }
     })
 
-    $("#btn").click(async function (e) {
+    $("h2").click(async function (e){
         e.preventDefault();
         let url = `https://news-api-project-8401e868529d.herokuapp.com/api/news?api_key=4b1a0e44-0205-4ad8-9158-3c10c3e87ae9`
-        async function mynews() {
-            let responce = await fetch(url);
-            let data = await responce.json();
-            for (let i = 0; i < data.news.length; i++) {
-                $("#city").append(`<h4>${data.news[i].tit}</h4>`);
+            async function mynews() {
+            let response = await fetch(url);
+            let data = await response.json();
+                console.log(data);
+            if (Array.isArray(data.news)) {
+                data.news.forEach(item => {
+                    const box = document.createElement('div');
+                    box.className = 'col-md-4';
+                    box.innerHTML = `
+                        <div class="box">
+                            <div class="imgbox">
+                                <img src="${item.img}" alt="">
+                            </div>
+                            <h1>${item.tit}</h1>
+                            <h4>${item.des}</h4>
+                            <div class="infobox">
+                                <div class="lbtn">Good</div>
+                                <div class="dbtn">Bad</div>
+                            </div>
+                        </div>
+                    `;
+                    $(".row").append(box);
+                });
             }
         }
-        await mynews()
+        mynews();
     });
 })
